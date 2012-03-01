@@ -1,0 +1,153 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=3956
+
+*fwk_notes.txt*   Manage your notes, track your tasks.
+                Copyright (c) 2010-2012 Sergey Vakulenko
+                License:      Vim License
+
+                                                                     *fwk_notes*
+
+INTRODUCTION                    |fwk_notes_introduction|
+INSTALLATION                    |fwk_notes_installation|
+USAGE                           |fwk_notes_usage|
+HOTKEYS                         |fwk_notes_hotkeys|
+GLOBAL VARIABLES                |fwk_notes_variables|
+CHANGES                         |fwk_notes_changes|
+
+
+==============================================================================
+INTRODUCTION                                            *fwk_notes_introduction*
+This plugin was created to manages your task/notes by days/weeks/years.
+Also, you can add your custom notes, of two types, static and dynamic.
+
+==============================================================================
+INSTALLATION                                            *fwk_notes_installation*
+
+Just drop files in zip archive to your vimfiles(win32) or .vim (linux/ubuntu),
+or your custom path.
+
+Plugin files~
+doc\fwk_notes.txt
+plugin\fwk_notes.vim
+plugin\fwk_tab_aranger.vim
+plugin\fwk_library_io_templates.vim
+syntax\notes.vim
+templates\template_notes_common.notes
+templates\template_notes_daily.notes
+
+
+Attention!~
+Its important that variable |g:fwk_templates_directory| contain the directory 
+with templates. By default, this path is $VIM/vimfiles/templates for win32,
+and $HOME/.vim/templates for linux. Anyway, you can change this variable to
+your proper, if you want other placehold for templates.
+
+==============================================================================
+USAGE                                                          *fwk_notes_usage*
+
+Main fonctionnality is to track your daily tasks and make the notes.
+Beside main fonctionnality (task tracking), you can create your custom notes.
+Custom notes can be of two types : static and dynamic.
+Static notes will be created once, and then your map will only open this file.
+Dynamic notes will be creates every new day. This is useful if you need to 
+make some notes each day. 
+
+video tutorial/demonstration
+http://www.youtube.com/watch?v=sX93En-eQ6Y
+
+==============================================================================
+HOTKEYS                                                      *fwk_notes_hotkeys*
+
+Maps local to *.notes extention ~
+--------------------------------------------------------------------
+Navigation ~
+\cd          open daily tasks
+ctrl-Up      move to next day
+ctrl-Down    move to previous day
+
+alt-Up       just to next notes section
+alt-Down     just to previous notes section
+             notes section can be:
+             To Do | Events | notes | Questions
+
+Tasks management ~
+alt-d        create task ( 1), 2), 3), ... )
+alt-a        create subtask ( a), b), c), ...)
+alt-space    create sub_sub_task ( -), -), -), ...)
+
+
+Status management ~
+\cd          change status to |Done|. In this status, date and time will be added
+             automaticly.
+\cp          change status to |Skip|.
+\ci          change status to |Important|.
+\c1          change status to |Group1|.
+\c2          change status to |Group2|.
+
+You can also apply all this commands in visual mode, by selecting the group of
+tasks.
+
+Global maps ~
+--------------------------------------------------------------------
+map \nd       open daily tasks. Its belong to dynamic notes.
+
+
+if you want to track some of your personal information 
+(dictinnary per day, ...), you can create you proper maps:
+
+                                                                  *fwk_dynamic*
+Dynamic notes, generate file each new day ~
+map \nv :|FwkNoteDynamic| Dictionnary<CR>
+map \nx :|FwkNoteDynamic| SpecialNotes<CR>
+map \nx :|FwkNoteDynamic| <SomeName><CR>
+....
+
+
+                                                                   *fwk_static*
+Static notes, generate only one file and then reuse it: ~
+map \nv :|FwkNoteStatic| Dictionnary<CR>
+map \nx :|FwkNoteStatic| SpecialNotes<CR>
+map \nx :|FwkNoteStatic| <SomeName><CR>
+....
+
+
+
+Tips: ~
+you can always change/comment maps. you can find them in fwk_notes.vim,
+function |FWK_Note_NotesMaps|.
+==============================================================================
+GLOBAL VARIABLES                                           *fwk_notes_variables*
+
+
+Global variables ~
+
+|g:fwk_notes_notes_directory|     Set path to notes directory. If not 
+                                defined, will be used $VIM/notes (win32) or 
+                                $VIM/notes (linux).
+
+|g:fwk_notes_disable|             1 if you want to disable plugin. By default
+                                plugin is on.
+
+|g:fwk_notes_open_node_mode|      Strategy to open notes. Possible values is
+                                0 to 3.
+        strategies: ~
+        0 - window mode (will be opened in same window only if only 1 window
+        in tab. Otherwise open happens in split mode). This is default mode.
+        1 - tab mode (will be opened in new tab).
+        2 - split mode, will be opened in same tab, but in new window.
+        3 - standard e:
+                                                     
+
+==============================================================================
+CHANGES                                                      *fwk_notes_changes*
+
+0.5    - added documentation
+       - fix bug with wrong indentation from words of form [a-z]\+)
+       - add of templates
+
+
+
+
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:
+
+
