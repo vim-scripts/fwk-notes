@@ -141,6 +141,7 @@ CHANGES                                                      *fwk_notes_changes*
 0.5    - added documentation
        - fix bug with wrong indentation from words of form [a-z]\+)
        - add of templates
+0.6    - fix task numbs > 10
 
 
 

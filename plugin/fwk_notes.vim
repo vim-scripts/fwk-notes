@@ -363,7 +363,8 @@ func s:FWK_Note_Mark_getNumbLine ( symbol, pattern )
 
     let l:numb = 0
     let l:isDigit = 1
-        if a:pattern ==  '\a'
+
+    if a:pattern ==  '\a'
         let l:isDigit = 0
     endif
 
@@ -371,18 +372,18 @@ func s:FWK_Note_Mark_getNumbLine ( symbol, pattern )
 
         "Decho('l:isDigit=' . l:isDigit)
 
-    let strToPaste      = ' '
+        let strToPaste      = ' '
 
-    if l:isDigit == 1
+        if l:isDigit == 1
             let l:numb = eval(a:symbol)
-        let l:numb += 1
-        let l:numb = string(l:numb)
+            let l:numb += 1
+            let l:numb = string(l:numb)
 
-    else
+        else
             let l:numb = substitute(a:symbol,'[\ ]','','g')
-        let l:numb = s:FWK_Note_Mark_Regex_Increment_SymbolDict[l:numb]
+            let l:numb = s:FWK_Note_Mark_Regex_Increment_SymbolDict[l:numb]
 
-    endif
+        endif
 
     else "let's give first characters
         if l:isDigit == 1
@@ -441,9 +442,9 @@ func FWK_Note_Mark_Regex_Char(symbol)
 endfunc
 func FWK_Note_Mark_Regex_w_new(pattern)
 
-    let pat_init_search         = '\s' . a:pattern . ')\s'
-    let pat_get_last_symb       =  '.*\s\(' . a:pattern .'\)).*' 
-    let pat_digit_search        =  '.*\s\('  . '\d'      .'\)).*' 
+    "let pat_init_search         = '\s' . a:pattern . '\+)\s'
+    let pat_get_last_symb       =  '.*\s\(' . a:pattern .'\+\)).*' 
+    let pat_digit_search        =  '.*\s\('  . '\d'      .'\+\)).*' 
 
     "let pat_init_search         = '\s' . a:pattern . '\?)\s'
     "let pat_get_last_symb       =  '.*\s\(' . a:pattern .'\?\)).*' 
@@ -464,7 +465,7 @@ func FWK_Note_Mark_Regex_w_new(pattern)
         "Decho('line=' . lineToCheck )
         "Decho('line_to_check=' . line_to_check )
 
-        if match ( line_to_check, pat_init_search) != -1
+        if match ( line_to_check, pat_get_last_symb) != -1
             let last_symbol  = substitute(line_to_check, pat_get_last_symb,'\1','')
             "Decho ('line=' . line(".") . 'last_symbol=' . last_symbol )
             let canWe_Break_Alpha_Chain = 0
