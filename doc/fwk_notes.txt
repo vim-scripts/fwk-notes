@@ -70,7 +70,7 @@ alt-Down     just to previous notes section
 Tasks management ~
 alt-d        create task ( 1), 2), 3), ... )
 alt-a        create subtask ( a), b), c), ...)
-alt-space    create sub_sub_task ( -), -), -), ...)
+alt-b        create sub_sub_task ( -), -), -), ...)
 
 
 Status management ~
@@ -142,8 +142,17 @@ CHANGES                                                      *fwk_notes_changes*
        - fix bug with wrong indentation from words of form [a-z]\+)
        - add of templates
 0.6    - fix task numbs > 10
+0.7    - fix paths parse for Linux(Ubuntu)
 
 
+0.8 - add save vim instance width
+    - add winx winy position of windows
+      Attention! vim (win32) on getwinposx|y return always -1 :( . Gvim and
+      vi works fine.
+    - Fixed skip open buffers if vim runs with arguments (for exemple vi <file> after gvim )
+
+0.81 fix loose of resize results (viewport)
+     change map alt-space to alt-b (bacause alt space is mapped in linux by OS)
 
 
 ==============================================================================

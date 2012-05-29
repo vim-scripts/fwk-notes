@@ -72,7 +72,7 @@ alt-Down     just to previous notes section
 Tasks management ~
 alt-d        create task ( 1), 2), 3), ... )
 alt-a        create subtask ( a), b), c), ...)
-alt-space    create sub_sub_task ( -), -), -), ...)
+alt-b        create sub_sub_task ( -), -), -), ...)
 
 
 Status management ~

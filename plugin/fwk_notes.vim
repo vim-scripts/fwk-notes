@@ -56,8 +56,12 @@ func s:FWK_Note_NotesMaps()
     imap     <buffer> <silent> <A-a>      <Esc>:call FWK_Note_Mark_Regex_w_new('\a')<CR>
 
     "new subsubtask: -) 
-    map      <buffer> <silent> <A-Space>       :call FWK_Note_Mark_Regex_Char('-')<CR>
-    imap     <buffer> <silent> <A-Space>  <Esc>:call FWK_Note_Mark_Regex_Char('-')<CR>
+    map      <buffer> <silent> <A-b>       :call FWK_Note_Mark_Regex_Char('-')<CR>
+    imap     <buffer> <silent> <A-b>  <Esc>:call FWK_Note_Mark_Regex_Char('-')<CR>
+
+
+    "map      <buffer> <silent> <A-Space>       :call FWK_Note_Mark_Regex_Char('-')<CR>
+    "imap     <buffer> <silent> <A-Space>  <Esc>:call FWK_Note_Mark_Regex_Char('-')<CR>
 
     "select the lines, and then add bulet symbol to each of line
     vmap     <buffer> <silent> <A-r>           :call FWK_Note_addWildcardBeforeText(' • ')<CR>
@@ -69,8 +73,8 @@ func s:FWK_Note_NotesMaps()
     "block maps if you will do autocmd BufRead,BufNewFile *.<someType>	notes maps
     if &ft == 'notes'
 
-        map      <buffer> <silent> <C-UP>      :call FWK_Note_Day_Navigation(1)<CR>
-        map      <buffer> <silent> <C-DOWN>    :call FWK_Note_Day_Navigation(-1)<CR>
+        map      <buffer> <silent> <C-UP>      :FwkNoteUp<CR>
+        map      <buffer> <silent> <C-DOWN>    :FwkNoteDown<CR>
 
         map      <buffer> <silent> <A-UP>      :call FWK_Note_MoveToTags(1) <CR>
         map      <buffer> <silent> <A-DOWN>    :call FWK_Note_MoveToTags(-1)<CR>
@@ -584,13 +588,15 @@ func s:FWK_Note_Day_Navigation_convert_numb_to_twobyte(variable)
 endfunc
 func FWK_Note_Day_Navigation(action_type)
 
-    let notes_path_pat           = '\(.*\)\(\d\{4\}\)\(\\\)\(\d\{2\}\)\(_\w\+\)'
+    let notes_path_pat           = '\(.*\)\(\d\{4\}\)\(\\\|\/\)\(\d\{2\}\)\(_\w\+\)'
     let notes_file_name_pat      = '\(\d\+\)\(\.\)\(\u\l\+\)\(\.\)\(\d\{4\}\)\(_\)\(\w*\)\(\.\)\(\l\+\)'
 
     let notes_file_name          = expand ("%:t")
     let local_day                = substitute(notes_file_name, notes_file_name_pat, '\1','')
     let notes_type               = substitute(notes_file_name, notes_file_name_pat,'\7','')
 
+"/home/svakulenko/Notes/dynamic/2012/04_Apr
+"C:\programs\gvim\Notes\dynamic\2012\04_Apr
     let notes_path               = expand ("%:p:h")
     let path_bgn                 = substitute(notes_path,notes_path_pat,'\1','')
     let slash                    = substitute(notes_path,notes_path_pat,'\3','')
@@ -599,12 +605,17 @@ func FWK_Note_Day_Navigation(action_type)
 
     let max_month                = 12
     let min_month                = 1
+    "Decho("notes_path=" . notes_path)
 
 
     if a:action_type == -1 || a:action_type == 1
 
         while 1
 
+            "Decho("path_bgn=" . path_bgn)
+            "Decho("local_year=" . local_year)
+            "Decho("local_month=" . local_month)
+            "Decho("eval(local_month)=" . eval(local_month))
             let path_coller_bgn = path_bgn . local_year . '/' . local_month . '_' . s:fwk_notes_dict_month[eval(local_month)] . '/'
             let reste_string    = '.' . s:fwk_notes_dict_month[eval(local_month)] . '.' . local_year . '_' . notes_type . '.notes'
 
@@ -705,6 +716,8 @@ command! -n=0 FwkNoteDaily        :call s:FWK_Note_create_dynamic('Daily')
 command! -n=1 FwkNoteDynamic      :call s:FWK_Note_create_dynamic('<args>')
 command! -n=1 FwkNoteSetColorMark :call   FWK_Note_setColorMark('<args>')
 command! -n=0 FwkNoteApplyMaps    :call s:FWK_Note_NotesMaps()
+command! -n=0 FwkNoteUp           :call   FWK_Note_Day_Navigation(1)
+command! -n=0 FwkNoteDown         :call   FWK_Note_Day_Navigation(-1)
 
 
 "INIT GLOBAL
